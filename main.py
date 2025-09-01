@@ -10,6 +10,9 @@ def load_students(csv_file):
     with open(csv_file, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
+            if not row["lat"] or not row["lon"]:  # skip empty values
+                print(f"⚠️ Skipping student {row['name']} (missing coordinates)")
+                continue
             students.append({
                 "id": int(row["id"]),
                 "name": row["name"],
